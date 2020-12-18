@@ -48,7 +48,7 @@ public class viewRecord extends javax.swing.JFrame {
         setContentPane(contentPane); 
         //contentPane.add(getBtnNewButton(), BorderLayout.SOUTH); 
         contentPane.add(getTable(), BorderLayout.CENTER); 
-        
+        //comment
     }
     
      private JTable getTable() {
