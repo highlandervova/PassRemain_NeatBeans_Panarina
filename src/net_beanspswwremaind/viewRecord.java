@@ -5,9 +5,14 @@
  */
 package net_beanspswwremaind;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import model.Record;
 
 
@@ -16,18 +21,77 @@ import model.Record;
  * @author M.Panarina
  */
 public class viewRecord extends javax.swing.JFrame {
+     private JPanel contentPane;
+ //private JButton btnNewButton;
+ private JTable table;
 
     /**
      * Creates new form viewRecord
      */
     public viewRecord() {
         
-        records.add(new Record(1, "address", "login", "pass", "comment", "data"));
+     //   records.add(new Record(1, "address", "login", "pass", "comment", "data"));
         
-        initComponents();
+      //  initComponents();
+        MyinitComponents();
        
             
     }
+    
+    
+    
+    public void MyinitComponents(){
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+        setBounds(100, 100, 450, 300);  contentPane = new JPanel(); 
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5)); 
+        contentPane.setLayout(new BorderLayout(0, 0));  
+        setContentPane(contentPane); 
+        //contentPane.add(getBtnNewButton(), BorderLayout.SOUTH); 
+        contentPane.add(getTable(), BorderLayout.CENTER); 
+        
+    }
+    
+     private JTable getTable() {
+  if (table == null) {
+   table = new JTable();
+     
+//public ArrayList<Record> records = new ArrayList<Record>();
+   
+   List<Record> records = model.RecordDao.getAllRecords();
+   Object[][] Objects = new Object[records.size()][6];
+   
+ 
+// Objects = model.RecordDao.getAllRecords();
+    
+   
+   for (int i=0; i<records.size();i++)
+   {
+       Record record = records.get(i);
+       
+       Objects[i][0]=record.getId();
+       Objects[i][1]=record.getAddress();
+       Objects[i][2]=record.getLogin();
+       Objects[i][3]=record.getPass();
+       Objects[i][4]=record.getData();
+       Objects[i][5]=record.getComment();
+              
+       
+       
+   };
+   
+   
+   table.setModel(new DefaultTableModel(
+   Objects ,
+    new String[] {
+     "New column", "New column", "New column", "New column", "New column", "New column"
+    }
+   ));
+   
+   
+  }
+  return table;
+ }
+
 
    
     
@@ -189,7 +253,7 @@ public class viewRecord extends javax.swing.JFrame {
         });
     }
 
-    public ArrayList<Record> records = new ArrayList<Record>();
+  
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
