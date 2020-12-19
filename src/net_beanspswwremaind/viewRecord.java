@@ -8,6 +8,7 @@ package net_beanspswwremaind;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -24,6 +25,7 @@ public class viewRecord extends javax.swing.JFrame {
      private JPanel contentPane;
  //private JButton btnNewButton;
  private JTable table;
+  Object[][] Objects;
 
     /**
      * Creates new form viewRecord
@@ -31,16 +33,32 @@ public class viewRecord extends javax.swing.JFrame {
     public viewRecord() {
         
      //   records.add(new Record(1, "address", "login", "pass", "comment", "data"));
-        
-      //  initComponents();
-        MyinitComponents();
+       List<Record> records = model.RecordDao.getAllRecords();
+
+         Objects = new Object[records.size()][6];
+   
+   for (int i=0; i<records.size();i++)
+   {
+       Record record = records.get(i);
+       
+       Objects[i][0]=record.getId();
+       Objects[i][1]=record.getAddress();
+       Objects[i][2]=record.getLogin();
+       Objects[i][3]=record.getPass();
+       Objects[i][4]=record.getData();
+       Objects[i][5]=record.getComment();
+       
+   };
+   
+        initComponents();
+       // MyinitComponents();
        
             
     }
     
     
     
-    public void MyinitComponents(){
+    public void MyinitComponents(){ //не используется..
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         setBounds(100, 100, 450, 300);  contentPane = new JPanel(); 
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5)); 
@@ -48,7 +66,7 @@ public class viewRecord extends javax.swing.JFrame {
         setContentPane(contentPane); 
         //contentPane.add(getBtnNewButton(), BorderLayout.SOUTH); 
         contentPane.add(getTable(), BorderLayout.CENTER); 
-        
+        //comment
     }
     
      private JTable getTable() {
@@ -122,15 +140,10 @@ public class viewRecord extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jTable1.setModel(new DefaultTableModel(
+            Objects ,
+            new String[] {
+                "id", "address", "login", "pass", "date", "comment"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -222,6 +235,8 @@ public class viewRecord extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
+         
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -251,6 +266,11 @@ public class viewRecord extends javax.swing.JFrame {
                 new viewRecord().setVisible(true);
             }
         });
+        
+        
+        
+        
+   
     }
 
   
